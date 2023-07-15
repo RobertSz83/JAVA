@@ -1,0 +1,151 @@
+import java.util.ArrayList;
+
+class Book {
+    private String title;
+    private String author;
+    private int year;
+    private String isbn;
+
+    public Book(String title, String author, int year, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.isbn = isbn;
+    }
+
+    // Gettery i settery
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+}
+
+class Library {
+    private ArrayList<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(String isbn) {
+        Book bookToRemove = null;
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                bookToRemove = book;
+                break;
+            }
+        }
+        if (bookToRemove != null) {
+            books.remove(bookToRemove);
+        }
+    }
+
+    public void displayBooks() {
+        System.out.println("List of books in the library:");
+        for (Book book : books) {
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author: " + book.getAuthor());
+            System.out.println("Year: " + book.getYear());
+            System.out.println("ISBN: " + book.getIsbn());
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Book> searchByTitle(String title) {
+        ArrayList<Book> matchingBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                matchingBooks.add(book);
+            }
+        }
+        return matchingBooks;
+    }
+
+    public ArrayList<Book> searchByAuthor(String author) {
+        ArrayList<Book> matchingBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                matchingBooks.add(book);
+            }
+        }
+        return matchingBooks;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        // Dodawanie książek
+        Book book1 = new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", 1997, "9780747532743");
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 1960, "9780061120084");
+        Book book3 = new Book("1984", "George Orwell", 1949, "9780451524935");
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+
+        
+        library.displayBooks();
+
+
+        ArrayList<Book> booksByTitle = library.searchByTitle("Harry Potter and the Philosopher's Stone");
+        System.out.println("Books with title 'Harry Potter and the Philosopher's Stone':");
+        for (Book book : booksByTitle) {
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author: " + book.getAuthor());
+            System.out.println("Year: " + book.getYear());
+            System.out.println("ISBN: " + book.getIsbn());
+            System.out.println();
+        }
+
+      
+        ArrayList<Book> booksByAuthor = library.searchByAuthor("George Orwell");
+        System.out.println("Books by author 'George Orwell':");
+        for (Book book : booksByAuthor) {
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author: " + book.getAuthor());
+            System.out.println("Year: " + book.getYear());
+            System.out.println("ISBN: " + book.getIsbn());
+            System.out.println();
+        }
+
+        
+        library.removeBook("9780061120084");
+
+      
+        library.displayBooks();
+    }
+}
